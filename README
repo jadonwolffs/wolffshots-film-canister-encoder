@@ -1,1 +1,3 @@
-Build the executable on your machine with g++ and make then use make run to run it or run it directly (via command line of graphical file browser).
+Buidling from source depends on g++ and make being installed. If you choose to use a different c++ compiler then you'll just need to change that in the top of the Makefile
+
+Running 'make' should create an executable in the directory and 'make run' should run it
