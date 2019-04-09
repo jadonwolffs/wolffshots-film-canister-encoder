@@ -7,10 +7,10 @@ tar = tar -cvf
 zip = jar -cMf
 archives = tar zip
 stuno = WLFJAD001
-flags = -std=c++11 -fPIC
+flags = -std=c++11
 
 $(primary): $(secondary).o $(primary).o
-	$(link) $(primary) $(primary).o $(secondary).o $(flags)
+	$(link) film-encoder.exe $(primary).o $(secondary).o $(flags)
 
 $(primary).o:
 	$(compile) $(primary).o $(primary).cpp $(flags)
@@ -19,7 +19,7 @@ $(secondary).o:
 	$(compile) $(secondary).o $(secondary).cpp $(flags)
 
 run: $(primary)
-	./driver
+	./film-encoder.exe
 
 clean:
-	$(rm) $(primary) $(primary).o $(secondary).o
+	$(rm) $(primary) $(primary).o $(secondary).o film-encoder*
