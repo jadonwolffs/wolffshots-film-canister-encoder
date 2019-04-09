@@ -1,0 +1,1 @@
+Build the executable on your machine with g++ and make then use make run to run it or run it directly (via command line of graphical file browser).

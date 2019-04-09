@@ -46,8 +46,8 @@ while (recurse1) {
 }
 bool recurse2 = true;
 while (recurse2) {
-  std::cout<< "Please enter the nearest desired details of your roll"<<std::endl;
-  std::cout << "ASAs: 25 32 40 50 64 80 100 125 160 200 250 320 400 500 640 800 1000 1250 1600 2000 2500 3200 4000 5000"<<std::endl;
+  std::cout<< "Please enter the nearest desired details of your roll\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="<<std::endl<<std::endl;
+  std::cout << "ASAs: \t25 32 40 50 64 80 100 125 160 200 250 320 400 \n\t500 640 800 1000 1250 1600 2000 2500 3200 4000 5000\n"<<std::endl;
   std::cout << "Please enter an ASA from the list:"<<std::endl;
   std::string asa;
   std::cin>>asa;
@@ -125,6 +125,9 @@ while (recurse2) {
       std::cout <<"-------------\n";
       std::cout << "|G|F|F|F|T|T| F represents the frame count and T represents the tolerance\n";
       std::cout <<"-------------\n\n";
+      std::cout << "Input anything to close the program.\n";
+      std::string end;
+      std::cin>>end;
       recurse2 = false;
     }
 
