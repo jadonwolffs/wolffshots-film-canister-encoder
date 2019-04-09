@@ -1,14 +1,19 @@
 #include "encoder.h"
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 Encoder::Encoder(std::string asa_s, std::string frames_s, std::string tolerance_s)
 {
-  // set_asa(asa);
   asa = std::stoi(asa_s);
-  // set_frames(frames_s);
   frames = std::stoi(frames_s);
-  // set_tolerance(tolerance_s);
+  tolerance = tolerance_s;
+  get_output();
+}
+Encoder::Encoder(int asa_i, char frames_c, std::string tolerance_s)
+{
+  asa = asa_i;
+  frames = frames_c;
   tolerance = tolerance_s;
   get_output();
 }
@@ -22,129 +27,129 @@ std::vector<bool> Encoder::get_asa(){
   switch (asa) {
     case 25:
     {
-      return {0,0,0,1,0};
+      return asa_enc_l[0];
       break;
     }
     case 32:
     {
-      return {0,0,0,0,1};
+      return asa_enc_l[1];
       break;
     }
     case 40:
     {
-      return {0,0,0,1,1};
+      return asa_enc_l[2];
       break;
     }
     case 50:
     {
-      return {1,0,0,1,0};
+      return asa_enc_l[3];
       break;
     }
     case 64:
     {
-      return {1,0,0,0,1};
+      return asa_enc_l[4];
       break;
     }
     case 80:
     {
-      return {1,0,0,1,1};
+      return asa_enc_l[5];
       break;
     }
     case 100:
     {
-      return {0,1,0,1,0};
+      return asa_enc_l[6];
       break;
     }
     case 125:
     {
-      return {0,1,0,0,1};
+      return asa_enc_l[7];
       break;
     }
     case 160:
     {
-      return {0,1,0,1,1};
+      return asa_enc_l[8];
       break;
     }
     case 200:
     {
-      return {1,1,0,1,0};
+      return asa_enc_l[9];
       break;
     }
     case 250:
     {
-      return {1,1,0,0,1};
+      return asa_enc_l[10];
       break;
     }
     case 320:
     {
-      return {1,1,0,1,1};
+      return asa_enc_l[11];
       break;
     }
     case 400:
     {
-      return {0,0,1,1,0};
+      return asa_enc_l[12];
       break;
     }
     case 500:
     {
-      return {0,0,1,0,1};
+      return asa_enc_l[13];
       break;
     }
     case 640:
     {
-      return {0,0,1,1,1};
+      return asa_enc_l[14];
       break;
     }
     case 800:
     {
-      return {1,0,1,1,0};
+      return asa_enc_l[15];
       break;
     }
     case 1000:
     {
-      return {1,0,1,0,1};
+      return asa_enc_l[16];
       break;
     }
     case 1250:
     {
-      return {1,0,1,1,1};
+      return asa_enc_l[17];
       break;
     }
     case 1600:
     {
-      return {0,1,1,1,0};
+      return asa_enc_l[18];
       break;
     }
     case 2000:
     {
-      return {0,1,1,0,1};
+      return asa_enc_l[19];
       break;
     }
     case 2500:
     {
-      return {0,1,1,1,1};
+      return asa_enc_l[20];
       break;
     }
     case 3200:
     {
-      return {1,1,1,1,0};
+      return asa_enc_l[21];
       break;
     }
     case 4000:
     {
-      return {1,1,1,0,1};
+      return asa_enc_l[22];
       break;
     }
     case 5000:
     {
-      return {1,1,1,1,1};
+      return asa_enc_l[23];
       break;
     }
     default:
     {
       // std::cout<<"No matching ASA."<<std::endl;
       asa_valid = 0;
-      return {0,0,0,0,0};
+      return asa_enc_l[24];
       break;
     }
   }
@@ -241,7 +246,7 @@ std::vector<std::vector<bool> > Encoder::get_output(){
     output[1][i+1] = get_frames()[i];
   }
   for (size_t i = 0; i < get_tolerance().size(); i++) {
-    output[1][i+2] = get_tolerance()[i];
+    output[1][i+4] = get_tolerance()[i];
   }
 
   return output;
@@ -300,42 +305,12 @@ int Encoder::check_valid(void){
   return 8;
 }
 
-// ASA	2	3	4	5	6
-// 25	0	0	0	1	0
-// 32	0	0	0	0	1
-// 40	0	0	0	1	1
-// 50	1	0	0	1	0
-// 64	1	0	0	0	1
-// 80	1	0	0	1	1
-// 100	0	1	0	1	0
-// 125	0	1	0	0	1
-// 160	0	1	0	1	1
-// 200	1	1	0	1	0
-// 250	1	1	0	0	1
-// 320	1	1	0	1	1
-// 400	0	0	1	1	0
-// 500	0	0	1	0	1
-// 640	0	0	1	1	1
-// 800	1	0	1	1	0
-// 1000	1	0	1	0	1
-// 1250	1	0	1	1	1
-// 1600	0	1	1	1	0
-// 2000	0	1	1	0	1
-// 2500	0	1	1	1	1
-// 3200	1	1	1	1	0
-// 4000	1	1	1	0	1
-// 5000	1	1	1	1	1
-// Frame
-// 0	0	0	0 //or other
-// 12	1	0	0
-// 20	0	1	0
-// 24	1	1	0
-// 36	0	0	1
-// 48	1	0	1
-// 60	0	1	1
-// 72	1	1	1
-// Tolerance
-// +-0,5	0	0
-// +-1	1	0
-// +2-1	0	1
-// +3-1	1	1
+std::vector<std::vector<bool> > Encoder::get_mod_output(std::string mod_s)
+{
+  int new_asa=0;
+  float mod_f = std::atof(mod_s.c_str());
+  new_asa = (asa*std::pow(2.0,mod_f));
+  std::cout << "\nThe new ASA is: "<<new_asa<<std::endl<<std::endl;
+  Encoder temp(new_asa,frames,tolerance);
+  return temp.get_output();
+}

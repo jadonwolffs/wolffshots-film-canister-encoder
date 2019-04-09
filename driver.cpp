@@ -2,51 +2,50 @@
 #include <iostream>
 #include <string>
 
-int main(int argc, char const *argv[]) {
-bool recurse1 = false;
-while (recurse1) {
-  std::cout<< "Please enter the details nearest that of the actual details of your roll"<<std::endl;
-  std::cout << "ASAs: 25 32 40 50 64 80 100 125 160 200 250 320 400 500 640 800 1000 1250 1600 2000 2500 3200 4000 5000"<<std::endl;
-  std::cout << "Please enter an ASA from the list:"<<std::endl;
-  std::string asa;
-  std::cin>>asa;
-  std::cout<<std::endl;
-  std::cout << "Exposure count values: 0(or other) 12 20 24 36 48 60 72"<<std::endl;
-  std::cout << "Please enter the exposure count from the list:"<<std::endl;
-  std::string frames;
-  std::cin>>frames;
-  std::cout<<std::endl;
-  std::cout << "Tolerance values: '+-0,5' '+-1' '+2-1' '+3-1'"<<std::endl;
-  std::cout << "Please enter the tolerance (as a single word such as +-0,5) from the list:"<<std::endl;
-  std::string tolerance;
-  std::cin>>tolerance;
-  std::cout<<std::endl;
-  std::cout << "You selected: "<<asa<<" ASA with "<< frames<< " exposures and a tolerance of "<< tolerance<<" stops" <<std::endl;
-  std::cout << "Is this information correct? (yes and y to proceed, no, n, cancel, c to re-enter or q to quit) ";
-  std::string check;
-  std::cin>>check;
-  std::cout<<std::endl;
-  if (check == "y" ||check == "yes" ||check == "Y" ||check == "Yes" ||check == "YES") {
-    std::cout << "You selected yes with value: "<<check <<std::endl;
-    Encoder encode(asa,frames,tolerance);
-    std::vector<std::vector<bool> > result = encode.get_output();
-    recurse1 = false;
-  } else if (check == "n" ||check == "no" ||check == "N" ||check == "No" ||check == "NO"||check == "c"||check == "cancel"||check == "C"||check == "Cancel"||check == "CANCEL") {
-    system("clear");
-    std::cout << "You selected no with value: "<<check <<std::endl;
-    recurse1 = true;
-  } else if (check == "q" ||check == "Q" ||check == "quit" ||check == "Quit" ||check == "QUIT") {
-    std::cout << "You selected quit with value: "<<check <<std::endl;
-    recurse1 = false;
-    return 0;
-  } else {
-    std::cout << "Invalid input: "<<check <<std::endl<<"Ending...";
-    return 0;
-  }
+int print_formatted_roll(int mode, std::string roll_details, std::string intro)
+{
+  std::cout<< intro;
+  std::cout <<"-------------\n";
+  std::cout <<"|G|S|S|S|S|S| G is a test strip which always has value 1 and S represents the ASA\n";
+  std::cout <<"-------------\n";
+  std::cout << roll_details;
+  std::cout <<"-------------\n";
+  std::cout << "|G|F|F|F|T|T| F represents the frame count and T represents the tolerance\n";
+  std::cout <<"-------------\n\n";
+  return 0;
 }
-bool recurse2 = true;
-while (recurse2) {
-  std::cout<< "Please enter the nearest desired details of your roll\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="<<std::endl<<std::endl;
+
+
+int main(int argc, char const *argv[]) {
+std::cout<< "Wolffshots Film Encoder\n=-=-=-=-=-=-=-=-=-=-=-="<<std::endl<<std::endl<<"Please select a mode by number\n1. Look-up for reference\n2. Look-up for encoding\n3. Modifying based on stops (for pushing, pulling and re-encoding expired film)\n";
+std::string mode_s;
+std::cin>>mode_s;
+int mode = stoi(mode_s);
+if (mode>=1 && mode<=3) {
+  /* code */
+}
+else
+{
+  return 0;
+}
+std::cout<<std::endl;
+bool recurse = true;
+while (recurse) {
+  std::string intro;
+  if (mode == 1) {
+    intro = "Please enter the nearest desired details of your roll\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=";
+  }
+  else if(mode==2)
+  {
+    intro = "Please enter the nearest desired details that you are aiming for\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=";
+  }
+  else if(mode==3)
+  {
+    intro = "Please enter the base details that your roll has\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=";
+  }
+
+  std::cout<< intro<<std::endl<<std::endl;
+
   std::cout << "ASAs: \t25 32 40 50 64 80 100 125 160 200 250 320 400 \n\t500 640 800 1000 1250 1600 2000 2500 3200 4000 5000\n"<<std::endl;
   std::cout << "Please enter an ASA from the list:"<<std::endl;
   std::string asa;
@@ -70,6 +69,7 @@ while (recurse2) {
   if (check == "y" ||check == "yes" ||check == "Y" ||check == "Yes" ||check == "YES") {
     // std::cout << "You selected yes with value: "<<check <<std::endl;
     Encoder encode(asa,frames,tolerance);
+
     bool proceed = 1;
     if (encode.check_valid()==0) {
       proceed=1;
@@ -112,32 +112,38 @@ while (recurse2) {
     {
       std::cout << "Fundamental error occurred. Ending...\n";
       proceed =0;
-      recurse1=0;
-      recurse2 =0;
+      recurse =0;
     }
 
     if (proceed) {
-      std::cout<< "Your coding of the roll should look as follows (where 0 represents a black non-conductive block and 1 represents a silver conductive block):\n\n";
-      std::cout <<"-------------\n";
-      std::cout <<"|G|S|S|S|S|S| G is a test strip which always has value 1 and S represents the ASA\n";
-      std::cout <<"-------------\n";
-      std::cout << encode.print_roll(encode.get_output());
-      std::cout <<"-------------\n";
-      std::cout << "|G|F|F|F|T|T| F represents the frame count and T represents the tolerance\n";
-      std::cout <<"-------------\n\n";
+
+
+
+      std::string mod_s;
+
+      print_formatted_roll(mode, encode.print_roll(encode.get_output()), "Your coding of the roll should look as follows currently (where 0 represents a black non-conductive block and 1 represents a silver conductive block):\n\n");
+
+      if (mode==3) {
+        std::cout << "Available modifications (in stops): -4 -3 -2 -1 +1 +2 +3 +4 (the program can use other values but it often won't generate correctly if not from the list)\n";
+        std::cout << "Please input the modification that you would like to do from the list:\n";
+        std::cin >> mod_s;
+        std::cout<<std::endl;
+        print_formatted_roll(mode, encode.print_roll(encode.get_mod_output(mod_s)), "You should make your roll look as follows to get the desired pull/push:\n\n");
+      }
+
       std::cout << "Input anything to close the program.\n";
       std::string end;
       std::cin>>end;
-      recurse2 = false;
+      recurse = false;
     }
 
   } else if (check == "n" ||check == "no" ||check == "N" ||check == "No" ||check == "NO"||check == "c"||check == "cancel"||check == "C"||check == "Cancel"||check == "CANCEL") {
     system("clear");
-    std::cout << "You selected no with value: "<<check <<std::endl;
-    recurse2 = true;
+    std::cout << "You selected 'no' with value: "<<check <<std::endl;
+    recurse = true;
   } else if (check == "q" ||check == "Q" ||check == "quit" ||check == "Quit" ||check == "QUIT") {
-    std::cout << "You selected quit with value: "<<check <<std::endl;
-    recurse2 = false;
+    std::cout << "You selected 'quit' with value: "<<check <<std::endl;
+    recurse = false;
     return 0;
   } else {
     std::cout << "Invalid input: "<<check <<std::endl<<"Ending...";
