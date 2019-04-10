@@ -19,7 +19,17 @@ Encoder::Encoder(int asa_i, char frames_c, std::string tolerance_s)
 }
 Encoder::~Encoder()
 {
-  //delete stuff
+  // delete & asa;
+  // delete & asa_l;
+  // for (size_t i = 0; i < asa_enc_l.size(); i++) {
+  //   delete & asa_enc_l[i];
+  // }
+  // delete & asa_enc_l;
+  // delete & asa_valid;
+  // delete & frames;
+  // delete & frames_valid;
+  // delete & tolerance;
+  // delete & tolerance_valid;
 }
 
 std::vector<bool> Encoder::get_asa(){
@@ -254,7 +264,7 @@ std::vector<std::vector<bool> > Encoder::get_output(){
 
 std::string Encoder::print_roll(std::vector<std::vector<bool> > output)
 {
-  std::string output_s;
+  std::string output_s = "";
   for (size_t i = 0; i < output.size(); i++) {
     for (size_t j = 0; j < output[0].size(); j++) {
       if (output[i][j]) {
@@ -265,7 +275,7 @@ std::string Encoder::print_roll(std::vector<std::vector<bool> > output)
       }
 
     }
-    output_s += "|\n";
+    output_s += "|\n\t";
   }
   return output_s;
 }
@@ -310,7 +320,7 @@ std::vector<std::vector<bool> > Encoder::get_mod_output(std::string mod_s)
   int new_asa=0;
   float mod_f = std::atof(mod_s.c_str());
   new_asa = (asa*std::pow(2.0,mod_f));
-  std::cout << "\nThe new ASA is: "<<new_asa<<std::endl<<std::endl;
+  std::cout << "\n\tThe new ASA is: "<<new_asa<<std::endl<<std::endl;
   Encoder temp(new_asa,frames,tolerance);
   return temp.get_output();
 }
