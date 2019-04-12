@@ -108,7 +108,7 @@ while (recurse) {
     }
     if (proceed) {
       std::string mod_s;
-      print_formatted_roll(mode, encode.print_roll(encode.get_output()), "\tYour coding of the roll should look as follows currently\n\t(where 0 represents a black non-conductive block and 1 represents a silver conductive block):\n\n");
+      print_formatted_roll(mode, encode.print_roll(encode.get_output()), "\tYour coding of the roll should look as follows currently\n\t(where \" \" represents a black non-conductive block and \"\u2588\" represents a silver conductive block):\n\n");
       if (mode==3) {
         std::cout << "\tAvailable modifications (in stops): -4 -3 -2 -1 +1 +2 +3 +4 \n\t(the program can use other values but it often won't generate correctly if not from the list)\n";
         std::cout << "\tPlease input the modification that you would like to do from the list:\n\t";
