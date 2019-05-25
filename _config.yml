@@ -1,1 +1,21 @@
 theme: jekyll-theme-midnight
+
+url: https://jadonwolffs.github.io/wolffshots-film-canister-encoder
+
+title: wolffshots film encoder
+description: A utility for calculating DX encoding for analog film
+
+
+show_downloads: true
+# google_analytics: UA-107549772-5
+
+github_username: jadonwolffs
+
+authors:
+  jadon:
+    name: Jadon Wolffs
+    site: http://jadonwolffs.github.io
+    twitter: wolffshots
+    github: jadonwolffs
+    instagram: wolffshots
+    byline: UCT PhotoSoc secretary 2018-2019 and a tinkerer.
