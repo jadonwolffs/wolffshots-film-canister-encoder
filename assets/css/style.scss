@@ -13,3 +13,17 @@ a {
     font-weight: 400;
     text-decoration: none;
 }
+
+#header nav li a {
+    color: white;
+    border: 1px solid #c70ea2;
+    background: linear_gradient(#ff33cc, #990099);
+    background-color: #bd20b3;
+}
+
+#header nav li a:hover {
+    background: linear_gradient(#ff33cc, #990099);
+    background-color: #c70ea2;
+    border: 1px solid #660066;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.2), 0px 1px 0px transparent;
+}
