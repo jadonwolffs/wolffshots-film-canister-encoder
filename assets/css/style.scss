@@ -1,0 +1,15 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+section #title h1 {
+		color: purple;
+		font-size: 40px;
+	}
+
+a {
+    color: #ff00e9;
+    font-weight: 400;
+    text-decoration: none;
+}
