@@ -19,7 +19,7 @@ Encoder::Encoder(int asa_i, char frames_c, std::string tolerance_s)
 }
 Encoder::~Encoder()
 {
-  
+
 }
 
 std::vector<bool> Encoder::get_asa(){
@@ -258,7 +258,7 @@ std::string Encoder::print_roll(std::vector<std::vector<bool> > output)
   for (size_t i = 0; i < output.size(); i++) {
     for (size_t j = 0; j < output[0].size(); j++) {
       if (output[i][j]) {
-        output_s += "|\u2588";
+        output_s += "|*";
       }else
       {
         output_s += "| ";
